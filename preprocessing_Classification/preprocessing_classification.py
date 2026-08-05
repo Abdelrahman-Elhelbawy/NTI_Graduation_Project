@@ -19,10 +19,8 @@ def classification_preprocessing():
     # -----------------------------
     df["Price_Category"] = df["price"].apply(
         lambda x: "Low"
-        if x < 350000
-        else "Medium"
-        if x <= 650000
-        else "Luxury"
+        if x < 450000
+        else "High"
     )
 
     # -----------------------------
