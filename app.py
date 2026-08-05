@@ -1,5 +1,12 @@
-name = input("Enter your name: ")
-age = int(input("Enter your age: "))
+import streamlit as st
 
-print(f"Hello, {name}!")
-print(f"Next year you will be {age + 1} years old.")
+st.set_page_config(
+    page_title="NTI Graduation Project",
+    layout="wide",
+)
+
+st.title("NTI Graduation Project")
+
+st.write(
+    "Welcome! Select a page from the sidebar to start using the application."
+)
