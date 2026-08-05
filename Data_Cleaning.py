@@ -1,60 +1,105 @@
 import pandas as pd
 import numpy as np
 
-df=pd.read_csv('data/kc_house_data.csv')
-print("Head of data",df.head())
-print("_______________________________________________________________")
-print("Tail of data",df.tail())
-print("_______________________________________________________________")
-print("Shape of data",df.shape)
-print("_______________________________________________________________")
-print("Info of data",df.info())
-print("_______________________________________________________________")
-print("Describe of data",df.describe())
-print("_______________________________________________________________")
-print("Types of data",df.dtypes)
-print("_______________________________________________________________")
-print("Number of null values",df.isnull().sum())
-print("_______________________________________________________________")
-print("Number of duplicated",df.duplicated().sum())
-print("_______________________________________________________________")
 
-df['date'] = pd.to_datetime(df['date'], format='%Y%m%dT%H%M%S')
+def clean_data():
 
-# بنستخرج منه سنة وشهر البيع كأعمدة رقمية مفيدة للموديل
-df['sale_year'] = df['date'].dt.year
-df['sale_month'] = df['date'].dt.month
+    # -----------------------------
+    # Load Dataset
+    # -----------------------------
+    df = pd.read_csv("data/kc_house_data.csv")
 
-df['was_renovated'] = (df['yr_renovated'] != 0).astype(int)
+    # -----------------------------
+    # Basic Information
+    # -----------------------------
+    head = df.head()
+    tail = df.tail()
+    shape_before = df.shape
+    describe = df.describe()
 
+    dtypes = df.dtypes.reset_index()
+    dtypes.columns = ["Column", "Data Type"]
 
+    missing_values = df.isnull().sum().reset_index()
+    missing_values.columns = ["Column", "Missing Values"]
 
-columns_to_cap = ['bedrooms', 'bathrooms', 'sqft_lot', 'sqft_lot15']
+    duplicate_count = df.duplicated().sum()
 
-for col in columns_to_cap:
-    Q1 = df[col].quantile(0.25)
-    Q3 = df[col].quantile(0.75)
-    IQR = Q3 - Q1
+    # -----------------------------
+    # Feature Engineering
+    # -----------------------------
+    df["date"] = pd.to_datetime(df["date"], format="%Y%m%dT%H%M%S")
 
-    lower_bound = Q1 - 1.5 * IQR
-    upper_bound = Q3 + 1.5 * IQR
+    df["sale_year"] = df["date"].dt.year
+    df["sale_month"] = df["date"].dt.month
 
-    n_low = (df[col] < lower_bound).sum()
-    n_high = (df[col] > upper_bound).sum()
+    df["was_renovated"] = (df["yr_renovated"] != 0).astype(int)
 
-    df[col] = np.where(df[col] < lower_bound, lower_bound, df[col])
-    df[col] = np.where(df[col] > upper_bound, upper_bound, df[col])
+    # -----------------------------
+    # Outlier Handling
+    # -----------------------------
+    columns_to_cap = [
+        "bedrooms",
+        "bathrooms",
+        "sqft_lot",
+        "sqft_lot15",
+    ]
 
-    print(f"[{col}] lower={lower_bound:.2f}, upper={upper_bound:.2f} "
-          f"-> capped {n_low} low values & {n_high} high values")
+    outlier_report = []
 
+    for col in columns_to_cap:
 
+        Q1 = df[col].quantile(0.25)
+        Q3 = df[col].quantile(0.75)
 
-df= df.drop(columns=['id', 'date','yr_renovated'])
-print("_______________________________________________________________")
-print("Shape after cleaning ", df.shape)
+        IQR = Q3 - Q1
 
-#######################################################
-df.to_csv("data/kc_house_cleaned.csv", index=False)
+        lower = Q1 - 1.5 * IQR
+        upper = Q3 + 1.5 * IQR
 
-print("Cleaned dataset saved successfully!")
+        low_values = (df[col] < lower).sum()
+        high_values = (df[col] > upper).sum()
+
+        df[col] = np.where(df[col] < lower, lower, df[col])
+        df[col] = np.where(df[col] > upper, upper, df[col])
+
+        outlier_report.append({
+            "Column": col,
+            "Lower Bound": round(lower, 2),
+            "Upper Bound": round(upper, 2),
+            "Low Values": low_values,
+            "High Values": high_values
+        })
+
+    # -----------------------------
+    # Drop Columns
+    # -----------------------------
+    df = df.drop(columns=["id", "date", "yr_renovated"])
+
+    shape_after = df.shape
+
+    print("_______________________________________________________________")
+    print("Shape after cleaning:", shape_after)
+
+    # -----------------------------
+    # Save Cleaned Dataset
+    # -----------------------------
+    df.to_csv("data/kc_house_cleaned.csv", index=False)
+
+    print("Cleaned dataset saved successfully!")
+
+    # -----------------------------
+    # Return Results
+    # -----------------------------
+    return {
+        "df": df,
+        "head": head,
+        "tail": tail,
+        "shape_before": shape_before,
+        "shape_after": shape_after,
+        "describe": describe,
+        "dtypes": dtypes,
+        "missing": missing_values,
+        "duplicates": duplicate_count,
+        "outliers": pd.DataFrame(outlier_report)
+    }
