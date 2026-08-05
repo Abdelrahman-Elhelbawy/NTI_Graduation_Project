@@ -1,12 +1,13 @@
 import streamlit as st
 
-st.set_page_config(
-    page_title="NTI Graduation Project",
-    layout="wide",
-)
+home = st.Page("pages/home.py", title="Home")
+cleaning = st.Page("pages/Data_cleaning.py", title="Data Cleaning")
 
-st.title("NTI Graduation Project")
+pg = st.navigation({
+    "NTI Graduation Project": [
+        home,
+        cleaning,
+    ]
+})
 
-st.write(
-    "Welcome! Select a page from the sidebar to start using the application."
-)
+pg.run()
