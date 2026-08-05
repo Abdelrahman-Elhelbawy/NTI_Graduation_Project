@@ -1,6 +1,6 @@
 import streamlit as st
 
-from Data_Cleaning import clean_data
+from services.Data_Cleaning import clean_data
 
 st.set_page_config(
     page_title="Data Cleaning",
