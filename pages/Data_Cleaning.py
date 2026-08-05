@@ -7,7 +7,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🧹 Data Cleaning")
+st.title("Data Cleaning")
 
 result = clean_data()
 
