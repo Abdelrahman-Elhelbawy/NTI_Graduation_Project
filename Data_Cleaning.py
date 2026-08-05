@@ -53,3 +53,8 @@ for col in columns_to_cap:
 df= df.drop(columns=['id', 'date','yr_renovated'])
 print("_______________________________________________________________")
 print("Shape after cleaning ", df.shape)
+
+#######################################################
+df.to_csv("data/kc_house_cleaned.csv", index=False)
+
+print("Cleaned dataset saved successfully!")

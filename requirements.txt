@@ -1,6 +1,11 @@
-numpy
 pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+xgboost
 streamlit
 fastapi
 uvicorn
 pydantic
+
