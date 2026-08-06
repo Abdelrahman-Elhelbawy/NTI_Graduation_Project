@@ -2,32 +2,29 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from sklearn.tree import plot_tree
-
-from services.classification.classification import train_decision_tree
-
+from services.classification.classification import train_xgboost_classifier
 
 st.set_page_config(
     page_title="Classification",
     layout="wide"
 )
 
-st.title("Decision Tree Classification")
+st.title("XGBoost Classification")
 
-# ==========================================
+# =====================================================
 # Train Model
-# ==========================================
+# =====================================================
 
-with st.spinner("Training Decision Tree Model..."):
-    result = train_decision_tree()
+with st.spinner("Training XGBoost Classifier..."):
+    result = train_xgboost_classifier()
 
-# ==========================================
+# =====================================================
 # Metrics
-# ==========================================
+# =====================================================
 
 st.header("Model Performance")
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 
 with col1:
     st.metric(
@@ -37,15 +34,21 @@ with col1:
 
 with col2:
     st.metric(
-        "Number of Features",
+        "Features",
         len(result["feature_names"])
+    )
+
+with col3:
+    st.metric(
+        "Classes",
+        len(result["class_names"])
     )
 
 st.divider()
 
-# ==========================================
+# =====================================================
 # Classification Report
-# ==========================================
+# =====================================================
 
 st.header("Classification Report")
 
@@ -56,9 +59,9 @@ st.dataframe(
 
 st.divider()
 
-# ==========================================
+# =====================================================
 # Feature Importance
-# ==========================================
+# =====================================================
 
 st.header("Feature Importance")
 
@@ -68,7 +71,8 @@ with col1:
 
     st.dataframe(
         result["importance"],
-        use_container_width=True
+        use_container_width=True,
+        hide_index=True
     )
 
 with col2:
@@ -79,18 +83,21 @@ with col2:
         data=result["importance"],
         x="Importance",
         y="Feature",
+        palette="viridis",
         ax=ax
     )
 
+    ax.set_xlabel("Importance")
+    ax.set_ylabel("Feature")
     ax.set_title("Feature Importance")
 
     st.pyplot(fig)
 
 st.divider()
 
-# ==========================================
+# =====================================================
 # Confusion Matrix
-# ==========================================
+# =====================================================
 
 st.header("Confusion Matrix")
 
@@ -106,43 +113,35 @@ sns.heatmap(
     ax=ax
 )
 
-ax.set_xlabel("Predicted Label")
-ax.set_ylabel("Actual Label")
+ax.set_xlabel("Predicted")
+ax.set_ylabel("Actual")
 
 st.pyplot(fig)
 
 st.divider()
 
-# ==========================================
-# Decision Tree
-# ==========================================
+# =====================================================
+# Prediction Results
+# =====================================================
 
-st.header("Decision Tree")
-
-fig, ax = plt.subplots(figsize=(24, 12))
-
-plot_tree(
-    result["model"],
-    feature_names=result["feature_names"],
-    class_names=result["class_names"],
-    filled=True,
-    rounded=True,
-    impurity=False,
-    fontsize=8,
-    ax=ax
-)
-
-st.pyplot(fig)
-
-st.divider()
-
-# ==========================================
-# Feature Importance Table
-# ==========================================
-
-st.header("Feature Ranking")
+st.header("Prediction Results")
 
 st.dataframe(
-    result["importance"],
-    use_container_width=True
+    result["prediction_table"],
+    use_container_width=True,
+    hide_index=True
+)
+
+st.divider()
+
+# =====================================================
+# Top Important Features
+# =====================================================
+
+st.header("Top 10 Important Features")
+
+st.dataframe(
+    result["importance"].head(10),
+    use_container_width=True,
+    hide_index=True
 )

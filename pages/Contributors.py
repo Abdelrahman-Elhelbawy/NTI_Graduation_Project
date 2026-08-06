@@ -5,9 +5,13 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("Contributors")
+st.title("Project Contributors")
 
-st.write("Meet the project team.")
+st.markdown(
+    """
+    This project was developed by the following team members.
+    """
+)
 
 st.divider()
 
@@ -20,10 +24,22 @@ contributors = [
     "Yomna Emad",
 ]
 
-cols = st.columns(2)
+cols = st.columns(3)
 
-for i, name in enumerate(contributors):
-    with cols[i % 2]:
-        st.container(border=True)
-        st.subheader(name)
-        st.caption("Team Member")
+for index, name in enumerate(contributors):
+    with cols[index % 3]:
+        with st.container(border=True):
+            st.subheader(name)
+            st.caption("Team Member")
+
+st.divider()
+
+st.markdown(
+    """
+    **Project:** House Price Prediction
+
+    **Platform:** Streamlit
+
+    **Organization:** NTI Graduation Project
+    """
+)
