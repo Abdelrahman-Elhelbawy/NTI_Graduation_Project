@@ -15,7 +15,7 @@ def clean_data():
     head = df.head()
     tail = df.tail()
     shape_before = df.shape
-    describe = df.describe()
+    describe = df.loc[:, df.columns != 'id'].describe()
 
     dtypes = df.dtypes.reset_index()
     dtypes.columns = ["Column", "Data Type"]
