@@ -4,14 +4,10 @@ import numpy as np
 
 def clean_data():
 
-    # -----------------------------
-    # Load Dataset
-    # -----------------------------
+
     df = pd.read_csv("data/kc_house_data.csv")
 
-    # -----------------------------
-    # Basic Information
-    # -----------------------------
+
     head = df.head()
     tail = df.tail()
     shape_before = df.shape
@@ -25,9 +21,6 @@ def clean_data():
 
     duplicate_count = df.duplicated().sum()
 
-    # -----------------------------
-    # Feature Engineering
-    # -----------------------------
     df["date"] = pd.to_datetime(df["date"], format="%Y%m%dT%H%M%S")
 
     df["sale_year"] = df["date"].dt.year
@@ -35,9 +28,7 @@ def clean_data():
 
     df["was_renovated"] = (df["yr_renovated"] != 0).astype(int)
 
-    # -----------------------------
-    # Outlier Handling
-    # -----------------------------
+   
     columns_to_cap = [
         "bedrooms",
         "bathrooms",
@@ -71,9 +62,6 @@ def clean_data():
             "High Values": high_values
         })
 
-    # -----------------------------
-    # Drop Columns
-    # -----------------------------
     df = df.drop(columns=["id", "date", "yr_renovated"])
 
     shape_after = df.shape
@@ -81,16 +69,12 @@ def clean_data():
     print("_______________________________________________________________")
     print("Shape after cleaning:", shape_after)
 
-    # -----------------------------
-    # Save Cleaned Dataset
-    # -----------------------------
+
     df.to_csv("data/kc_house_cleaned.csv", index=False)
 
     print("Cleaned dataset saved successfully!")
 
-    # -----------------------------
-    # Return Results
-    # -----------------------------
+
     return {
         "df": df,
         "head": head,

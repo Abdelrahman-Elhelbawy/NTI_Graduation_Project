@@ -5,10 +5,6 @@ st.set_page_config(
     layout="wide",
 )
 
-# ==========================
-# Pages
-# ==========================
-
 home = st.Page(
     "pages/home.py",
     title="Home",
@@ -57,9 +53,6 @@ contributors = st.Page(
     # icon="👥"
 )
 
-# ==========================
-# Navigation
-# ==========================
 
 pg = st.navigation(
     {

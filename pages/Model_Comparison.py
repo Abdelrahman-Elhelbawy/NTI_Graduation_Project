@@ -12,17 +12,11 @@ st.set_page_config(
 
 st.title("Regression Models Comparison")
 
-# ==========================================
-# Train Models
-# ==========================================
 
 with st.spinner("Training Models..."):
     ridge = train_regression()
     xgb = train_xgboost()
 
-# ==========================================
-# Metrics Cards
-# ==========================================
 
 st.header("Performance Metrics")
 
@@ -42,9 +36,6 @@ with col2:
 
 st.divider()
 
-# ==========================================
-# Comparison Table
-# ==========================================
 
 comparison_df = pd.DataFrame({
     "Metric": ["R² Score", "RMSE", "MAE"],
@@ -70,9 +61,6 @@ st.dataframe(
 
 st.divider()
 
-# ==========================================
-# Bar Chart
-# ==========================================
 
 st.header("Metrics Comparison")
 
@@ -118,9 +106,6 @@ st.pyplot(fig)
 
 st.divider()
 
-# ==========================================
-# Actual vs Predicted
-# ==========================================
 
 st.header("Actual vs Predicted")
 
@@ -180,9 +165,6 @@ with col2:
 
 st.divider()
 
-# ==========================================
-# Best Model
-# ==========================================
 
 st.header("Best Model")
 

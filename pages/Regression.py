@@ -13,15 +13,8 @@ st.set_page_config(
 
 st.title("Regression Model")
 
-# ======================================
-# Train Model
-# ======================================
-
 result = train_regression()
 
-# ======================================
-# Metrics
-# ======================================
 
 st.header("Model Performance")
 
@@ -47,9 +40,6 @@ with col3:
 
 st.divider()
 
-# ======================================
-# Actual vs Predicted
-# ======================================
 
 st.header("Actual vs Predicted")
 
@@ -80,9 +70,6 @@ st.pyplot(fig)
 
 st.divider()
 
-# ======================================
-# Residual Plot
-# ======================================
 
 st.header("Residual Plot")
 
@@ -113,9 +100,6 @@ st.pyplot(fig)
 
 st.divider()
 
-# ======================================
-# Prediction
-# ======================================
 
 st.header("Predict House Price")
 

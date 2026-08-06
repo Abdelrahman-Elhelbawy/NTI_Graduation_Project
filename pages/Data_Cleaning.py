@@ -11,9 +11,6 @@ st.title("Data Cleaning")
 
 result = clean_data()
 
-# =====================================
-# Dataset Overview
-# =====================================
 
 st.header("Dataset Overview")
 
@@ -25,9 +22,6 @@ col3.metric("Duplicates", result["duplicates"])
 
 st.divider()
 
-# =====================================
-# Preview
-# =====================================
 
 tab1, tab2 = st.tabs(["Head", "Tail"])
 
@@ -37,9 +31,6 @@ with tab1:
 with tab2:
     st.dataframe(result["tail"], use_container_width=True)
 
-# =====================================
-# Data Types
-# =====================================
 
 st.header("Data Types")
 
@@ -48,9 +39,6 @@ st.dataframe(
     use_container_width=True
 )
 
-# =====================================
-# Missing Values
-# =====================================
 
 st.header("Missing Values")
 
@@ -59,9 +47,6 @@ st.dataframe(
     use_container_width=True
 )
 
-# =====================================
-# Statistics
-# =====================================
 
 st.header("Statistical Summary")
 
@@ -70,9 +55,6 @@ st.dataframe(
     use_container_width=True
 )
 
-# =====================================
-# Outlier Report
-# =====================================
 
 st.header("Outlier Treatment")
 
@@ -81,9 +63,6 @@ st.dataframe(
     use_container_width=True
 )
 
-# =====================================
-# Final Dataset
-# =====================================
 
 st.header("Cleaned Dataset")
 

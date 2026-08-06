@@ -14,9 +14,6 @@ from services.regression.preprocessing import preprocess_regression
 
 def train_regression():
 
-    # =====================================
-    # Load Preprocessed Data
-    # =====================================
 
     data = preprocess_regression()
 
@@ -30,16 +27,10 @@ def train_regression():
 
     scaler = data["scaler"]
 
-    # =====================================
-    # Log Transform Target
-    # =====================================
-
+ 
     y_train_log = np.log1p(y_train)
     y_test_log = np.log1p(y_test)
 
-    # =====================================
-    # Polynomial Features
-    # =====================================
 
     poly = PolynomialFeatures(
         degree=2,
@@ -54,9 +45,6 @@ def train_regression():
         X_test_scaled
     )
 
-    # =====================================
-    # Ridge Regression
-    # =====================================
 
     model = Ridge(alpha=100)
 
@@ -65,10 +53,7 @@ def train_regression():
         y_train_log,
     )
 
-    # =====================================
-    # Prediction
-    # =====================================
-
+  
     y_pred_log = model.predict(
         X_test_poly
     )
@@ -77,9 +62,6 @@ def train_regression():
 
     y_actual = np.expm1(y_test_log)
 
-    # =====================================
-    # Metrics
-    # =====================================
 
     r2 = r2_score(
         y_actual,

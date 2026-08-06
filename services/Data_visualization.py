@@ -15,9 +15,6 @@ def load_data():
     )
 
 
-# =====================================================
-# Distribution of House Prices
-# =====================================================
 
 def price_distribution(df):
 
@@ -38,9 +35,6 @@ def price_distribution(df):
     return fig
 
 
-# =====================================================
-# Box Plot
-# =====================================================
 
 def price_boxplot(df):
 
@@ -57,9 +51,6 @@ def price_boxplot(df):
     return fig
 
 
-# =====================================================
-# Correlation Heatmap
-# =====================================================
 
 def correlation_heatmap(df):
 
@@ -82,9 +73,6 @@ def correlation_heatmap(df):
     return fig
 
 
-# =====================================================
-# Correlation With Price
-# =====================================================
 
 def correlation_with_price(df):
 
@@ -106,9 +94,6 @@ def correlation_with_price(df):
     return fig
 
 
-# =====================================================
-# Living Area vs Price
-# =====================================================
 
 def living_area_vs_price(df):
 
@@ -127,9 +112,6 @@ def living_area_vs_price(df):
     return fig
 
 
-# =====================================================
-# Price By Grade
-# =====================================================
 
 def price_by_grade(df):
 
@@ -148,9 +130,6 @@ def price_by_grade(df):
     return fig
 
 
-# =====================================================
-# Price By Waterfront
-# =====================================================
 
 def price_by_waterfront(df):
 
@@ -169,9 +148,6 @@ def price_by_waterfront(df):
     return fig
 
 
-# =====================================================
-# Price By Condition
-# =====================================================
 
 def price_by_condition(df):
 
@@ -189,9 +165,6 @@ def price_by_condition(df):
     return fig
 
 
-# =====================================================
-# Price By View
-# =====================================================
 
 def price_by_view(df):
 
@@ -209,9 +182,6 @@ def price_by_view(df):
     return fig
 
 
-# =====================================================
-# Average Price By Bedrooms
-# =====================================================
 
 def average_price_by_bedrooms(df):
 
@@ -229,9 +199,6 @@ def average_price_by_bedrooms(df):
     return fig
 
 
-# =====================================================
-# Number of Houses By Bedrooms
-# =====================================================
 
 def houses_by_bedrooms(df):
 
@@ -248,9 +215,6 @@ def houses_by_bedrooms(df):
     return fig
 
 
-# =====================================================
-# House Locations
-# =====================================================
 
 def house_locations(df):
 
@@ -271,9 +235,6 @@ def house_locations(df):
     return fig
 
 
-# =====================================================
-# Pair Plot
-# =====================================================
 
 def pair_plot(df):
 

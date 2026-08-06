@@ -6,15 +6,9 @@ from sklearn.preprocessing import LabelEncoder
 
 def preprocess_classification():
 
-    # ===========================
-    # Load Dataset
-    # ===========================
 
     df = pd.read_csv("data/kc_house_cleaned.csv")
 
-    # ===========================
-    # Create Target
-    # ===========================
 
     df["Price_Category"] = df["price"].apply(
             lambda x: "Low"
@@ -22,19 +16,12 @@ def preprocess_classification():
             else "High"
         )
 
-    # ===========================
-    # Encode Target
-    # ===========================
 
     le = LabelEncoder()
 
     df["Price_Category"] = le.fit_transform(
         df["Price_Category"]
     )
-
-    # ===========================
-    # Features & Target
-    # ===========================
 
     X = df.drop(
         ["price", "Price_Category"],
@@ -43,9 +30,6 @@ def preprocess_classification():
 
     y = df["Price_Category"]
 
-    # ===========================
-    # Train Test Split
-    # ===========================
 
     X_train, X_test, y_train, y_test = train_test_split(
         X,

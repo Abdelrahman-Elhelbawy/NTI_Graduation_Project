@@ -10,9 +10,6 @@ def preprocess_regression():
     perform train/test split and feature scaling.
     """
 
-    # ==========================
-    # Load Dataset
-    # ==========================
 
     df = pd.read_csv("data/kc_house_cleaned.csv")
 
@@ -23,9 +20,6 @@ def preprocess_regression():
     X = df.drop("price", axis=1)
     y = df["price"]
 
-    # ==========================
-    # Train / Test Split
-    # ==========================
 
     X_train, X_test, y_train, y_test = train_test_split(
         X,
@@ -35,18 +29,12 @@ def preprocess_regression():
         shuffle=True
     )
 
-    # ==========================
-    # Feature Scaling
-    # ==========================
 
     scaler = StandardScaler()
 
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    # ==========================
-    # Return Everything
-    # ==========================
 
     return {
         "df": df,

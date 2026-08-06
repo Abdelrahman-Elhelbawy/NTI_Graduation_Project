@@ -13,15 +13,9 @@ st.set_page_config(
 
 st.title("XGBoost Regression")
 
-# ======================================
-# Train Model
-# ======================================
 
 result = train_xgboost()
 
-# ======================================
-# Metrics
-# ======================================
 
 st.header("Model Performance")
 
@@ -47,10 +41,6 @@ with col3:
 
 st.divider()
 
-# ======================================
-# Feature Importance
-# ======================================
-
 st.header("Feature Importance")
 
 fig, ax = plt.subplots(figsize=(10,6))
@@ -70,9 +60,6 @@ st.pyplot(fig)
 
 st.divider()
 
-# ======================================
-# Actual vs Predicted
-# ======================================
 
 st.header("Actual vs Predicted")
 
@@ -103,9 +90,6 @@ st.pyplot(fig)
 
 st.divider()
 
-# ======================================
-# Residual Plot
-# ======================================
 
 st.header("Residual Plot")
 
@@ -136,9 +120,6 @@ st.pyplot(fig)
 
 st.divider()
 
-# ======================================
-# Prediction
-# ======================================
 
 st.header("Predict House Price")
 

@@ -14,10 +14,7 @@ from services.regression.preprocessing import preprocess_regression
 
 def train_xgboost():
 
-    # ====================================
-    # Load Preprocessed Data
-    # ====================================
-
+ 
     data = preprocess_regression()
 
     X = data["X"]
@@ -28,16 +25,9 @@ def train_xgboost():
     y_train = data["y_train"]
     y_test = data["y_test"]
 
-    # ====================================
-    # Log Transform
-    # ====================================
 
     y_train_log = np.log1p(y_train)
     y_test_log = np.log1p(y_test)
-
-    # ====================================
-    # Model
-    # ====================================
 
     model = XGBRegressor(
         n_estimators=500,
@@ -54,9 +44,6 @@ def train_xgboost():
         y_train_log
     )
 
-    # ====================================
-    # Prediction
-    # ====================================
 
     y_pred_log = model.predict(X_test)
 
@@ -64,9 +51,6 @@ def train_xgboost():
 
     y_actual = np.expm1(y_test_log)
 
-    # ====================================
-    # Metrics
-    # ====================================
 
     r2 = r2_score(
         y_actual,
@@ -85,18 +69,12 @@ def train_xgboost():
         y_pred
     )
 
-    # ====================================
-    # Prediction Table
-    # ====================================
 
     results = pd.DataFrame({
         "Actual Price": y_actual,
         "Predicted Price": y_pred
     })
 
-    # ====================================
-    # Feature Importance
-    # ====================================
 
     importance = pd.DataFrame({
         "Feature": X.columns,

@@ -16,29 +16,17 @@ def train_xgboost_classifier():
     Train an XGBoost classifier for House Price Category prediction.
     """
 
-    # ==========================================
-    # Load Dataset
-    # ==========================================
 
     df = pd.read_csv("data/kc_house_cleaned.csv")
 
-    # ==========================================
-    # Feature Engineering
-    # ==========================================
 
     df["house_age"] = df["sale_year"] - df["yr_built"]
 
-    # ==========================================
-    # Create Target
-    # ==========================================
 
     df["Price_Category"] = df["price"].apply(
         lambda x: "Low" if x < 450000 else "High"
     )
 
-    # ==========================================
-    # Encode Target
-    # ==========================================
 
     le = LabelEncoder()
 
@@ -46,9 +34,6 @@ def train_xgboost_classifier():
         df["Price_Category"]
     )
 
-    # ==========================================
-    # Features & Target
-    # ==========================================
 
     X = df.drop(
         ["price", "Price_Category"],
@@ -57,9 +42,6 @@ def train_xgboost_classifier():
 
     y = df["Price_Category"]
 
-    # ==========================================
-    # Train Test Split
-    # ==========================================
 
     X_train, X_test, y_train, y_test = train_test_split(
         X,
@@ -69,9 +51,6 @@ def train_xgboost_classifier():
         stratify=y,
     )
 
-    # ==========================================
-    # Model
-    # ==========================================
 
     model = XGBClassifier(
         n_estimators=300,
@@ -88,17 +67,11 @@ def train_xgboost_classifier():
         y_train
     )
 
-    # ==========================================
-    # Prediction
-    # ==========================================
 
     y_pred = model.predict(
         X_test
     )
 
-    # ==========================================
-    # Metrics
-    # ==========================================
 
     accuracy = accuracy_score(
         y_test,
@@ -151,23 +124,6 @@ def train_xgboost_classifier():
     }
 
 
-# def predict_price_category(model, input_df):
-#     """
-#     Predict house price category.
-#     """
-
-#     prediction = model.predict(input_df)
-
-#     if prediction[0] == 0:
-#         return "Low"
-
-#     return "High"
-
-def predict_price_category(model, input_df):
-    """
-    Predict house price category.
-    """
-
+def predict_price_category(model, input_df, le):
     prediction = model.predict(input_df)
-
-    return "Low" if prediction[0] == 0 else "High"
+    return le.inverse_transform(prediction)[0]

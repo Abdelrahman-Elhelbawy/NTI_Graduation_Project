@@ -3,11 +3,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
-# from services.classification.classification import (
-#     train_xgboost_classifier,
-#     predict_price_category
-# )
-
 from services.classification.classification import (
     train_xgboost_classifier,
     predict_price_category,
@@ -20,16 +15,10 @@ st.set_page_config(
 
 st.title("XGBoost Classification")
 
-# =====================================================
-# Train Model
-# =====================================================
 
 with st.spinner("Training XGBoost Classifier..."):
     result = train_xgboost_classifier()
 
-# =====================================================
-# Metrics
-# =====================================================
 
 st.header("Model Performance")
 
@@ -55,9 +44,6 @@ with col3:
 
 st.divider()
 
-# =====================================================
-# Classification Report
-# =====================================================
 
 st.header("Classification Report")
 
@@ -68,9 +54,6 @@ st.dataframe(
 
 st.divider()
 
-# =====================================================
-# Feature Importance
-# =====================================================
 
 st.header("Feature Importance")
 
@@ -102,10 +85,6 @@ with col2:
 
 st.divider()
 
-# =====================================================
-# Confusion Matrix
-# =====================================================
-
 st.header("Confusion Matrix")
 
 fig, ax = plt.subplots(figsize=(6, 5))
@@ -127,10 +106,6 @@ st.pyplot(fig)
 
 st.divider()
 
-# =====================================================
-# Prediction Results
-# =====================================================
-
 st.header("Prediction Results")
 
 st.dataframe(
@@ -141,9 +116,6 @@ st.dataframe(
 
 st.divider()
 
-# =====================================================
-# Top Features
-# =====================================================
 
 st.header("Top 10 Important Features")
 
@@ -155,9 +127,6 @@ st.dataframe(
 
 st.divider()
 
-# =====================================================
-# Prediction
-# =====================================================
 
 st.divider()
 
