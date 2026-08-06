@@ -1,5 +1,4 @@
 import pandas as pd
-
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import (
@@ -16,17 +15,29 @@ def train_xgboost_classifier():
     Train an XGBoost classifier for House Price Category prediction.
     """
 
+    # ==========================================
+    # Load Dataset
+    # ==========================================
 
     df = pd.read_csv("data/kc_house_cleaned.csv")
 
+    # ==========================================
+    # Feature Engineering
+    # ==========================================
 
     df["house_age"] = df["sale_year"] - df["yr_built"]
 
+    # ==========================================
+    # Create Target
+    # ==========================================
 
     df["Price_Category"] = df["price"].apply(
         lambda x: "Low" if x < 450000 else "High"
     )
 
+    # ==========================================
+    # Encode Target
+    # ==========================================
 
     le = LabelEncoder()
 
@@ -34,6 +45,9 @@ def train_xgboost_classifier():
         df["Price_Category"]
     )
 
+    # ==========================================
+    # Features & Target
+    # ==========================================
 
     X = df.drop(
         ["price", "Price_Category"],
@@ -42,6 +56,9 @@ def train_xgboost_classifier():
 
     y = df["Price_Category"]
 
+    # ==========================================
+    # Train Test Split
+    # ==========================================
 
     X_train, X_test, y_train, y_test = train_test_split(
         X,
@@ -50,6 +67,12 @@ def train_xgboost_classifier():
         random_state=42,
         stratify=y,
     )
+
+
+
+
+
+
 
 
     model = XGBClassifier(
@@ -66,6 +89,7 @@ def train_xgboost_classifier():
         X_train,
         y_train
     )
+
 
 
     y_pred = model.predict(
@@ -124,6 +148,14 @@ def train_xgboost_classifier():
     }
 
 
-def predict_price_category(model, input_df, le):
+def predict_price_category(model, input_df):
+    """
+    Predict house price category.
+    """
+
     prediction = model.predict(input_df)
-    return le.inverse_transform(prediction)[0]
+
+    if prediction[0] == 0:
+        return "High"
+
+    return "Low"

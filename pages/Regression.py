@@ -121,11 +121,12 @@ if st.button("Predict"):
     )
 
     prediction = predict_price(
-        result["model"],
-        result["scaler"],
-        result["poly"],
-        input_df,
-    )
+    result["model"],
+    result["scaler"],
+    result["poly"],
+    result["features"],
+    input_df,
+)
 
     st.success(
         f"Predicted Price : ${prediction:,.2f}"
