@@ -151,6 +151,18 @@ def train_xgboost_classifier():
     }
 
 
+# def predict_price_category(model, input_df):
+#     """
+#     Predict house price category.
+#     """
+
+#     prediction = model.predict(input_df)
+
+#     if prediction[0] == 0:
+#         return "Low"
+
+#     return "High"
+
 def predict_price_category(model, input_df):
     """
     Predict house price category.
@@ -158,7 +170,4 @@ def predict_price_category(model, input_df):
 
     prediction = model.predict(input_df)
 
-    if prediction[0] == 0:
-        return "Low"
-
-    return "High"
+    return "Low" if prediction[0] == 0 else "High"

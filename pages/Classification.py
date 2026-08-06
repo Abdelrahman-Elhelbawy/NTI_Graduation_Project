@@ -1,8 +1,17 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
 
-from services.classification.classification import train_xgboost_classifier
+# from services.classification.classification import (
+#     train_xgboost_classifier,
+#     predict_price_category
+# )
+
+from services.classification.classification import (
+    train_xgboost_classifier,
+    predict_price_category,
+)
 
 st.set_page_config(
     page_title="Classification",
@@ -77,7 +86,7 @@ with col1:
 
 with col2:
 
-    fig, ax = plt.subplots(figsize=(8, 5))
+    fig, ax = plt.subplots(figsize=(9, 5))
 
     sns.barplot(
         data=result["importance"],
@@ -87,8 +96,6 @@ with col2:
         ax=ax
     )
 
-    ax.set_xlabel("Importance")
-    ax.set_ylabel("Feature")
     ax.set_title("Feature Importance")
 
     st.pyplot(fig)
@@ -135,7 +142,7 @@ st.dataframe(
 st.divider()
 
 # =====================================================
-# Top Important Features
+# Top Features
 # =====================================================
 
 st.header("Top 10 Important Features")
@@ -145,3 +152,44 @@ st.dataframe(
     use_container_width=True,
     hide_index=True
 )
+
+st.divider()
+
+# =====================================================
+# Prediction
+# =====================================================
+
+st.divider()
+
+st.header("Predict House Category")
+
+with st.form("prediction_form"):
+
+    user_input = {}
+
+    columns = st.columns(3)
+
+    for index, feature in enumerate(result["feature_names"]):
+
+        with columns[index % 3]:
+
+            user_input[feature] = st.number_input(
+                feature,
+                value=0.0,
+                format="%.2f"
+            )
+
+    submitted = st.form_submit_button("Predict")
+
+if submitted:
+
+    input_df = pd.DataFrame([user_input])
+
+    prediction = predict_price_category(
+        result["model"],
+        input_df,
+    )
+
+    st.success(
+        f"Predicted Category: {prediction}"
+    )
